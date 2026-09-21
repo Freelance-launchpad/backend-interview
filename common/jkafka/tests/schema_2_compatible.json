@@ -1,0 +1,21 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Dog",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "integer",
+      "description": "Unique dog identifier"
+    },
+    "name": {
+      "type": "string",
+      "description": "Full name of the dog"
+    },
+    "breed": {
+      "type": "string",
+      "description": "The breed of the dog"
+    }
+  },
+  "required": ["id", "name"],
+  "additionalProperties": false
+}

@@ -1,0 +1,10 @@
+configuration:
+  database:
+    host: "shared-database.app.svc.cluster.local"
+    port: 5432
+    user: "activity-reports-cronjobs"
+    name: "activity-reports"
+
+  auth_url: "http://auth/"
+  users_url: "http://users/"
+  gotenberg_url: "http://gotenberg"

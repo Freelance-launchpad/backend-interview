@@ -1,0 +1,427 @@
+openapi: 3.0.1
+info:
+  title: activity-reports
+  description: This api exposes activity-reports endpoints.
+  contact: {}
+  version: 1.0.0
+servers:
+- url: /activity-reports
+paths:
+  /v3/activity-reports:
+    post:
+      tags:
+      - Activity Reports
+      - User
+      description: Create activity reports for the current offer.
+      parameters:
+      - name: X-Jump-Offer-ID
+        in: header
+        description: Offer ID
+        required: true
+        schema:
+          type: string
+      requestBody:
+        description: Activity reports
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/domain.CreateReportInput'
+        required: true
+      responses:
+        "204":
+          description: No Content
+          content: {}
+        "400":
+          description: INVALID_PAYLOAD
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/jgin.Error'
+        "403":
+          description: INVALID_OFFER_ID | INVALID_MISSION_OWNER
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/jgin.Error'
+        "500":
+          description: INTERNAL_SERVER_ERROR
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/jgin.Error'
+      x-codegen-request-body-name: body
+  /v3/activity-reports/missing:
+    get:
+      tags:
+      - Activity Reports
+      - User
+      description: Get missing activity reports for the current offer.
+      parameters:
+      - name: X-Jump-Offer-ID
+        in: header
+        description: Offer ID
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/domain.MissingReportResponse'
+        "403":
+          description: INVALID_OFFER_ID
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/jgin.Error'
+        "500":
+          description: INTERNAL_SERVER_ERROR
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/jgin.Error'
+  /v3/admin/offers/{offer_id}/activity-reports:
+    get:
+      tags:
+      - Activity Reports
+      - Admin
+      description: Get activity reports for the given offer.
+      parameters:
+      - name: offer_id
+        in: path
+        description: Offer ID
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/domain.ReportResponse'
+        "400":
+          description: INVALID_OFFER_ID
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/jgin.Error'
+        "500":
+          description: INTERNAL_SERVER_ERROR
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/jgin.Error'
+  /v3/admin/offers/{offer_id}/work-schedules/rest-days:
+    get:
+      tags:
+      - Work Schedules
+      - Admin
+      description: Get the rest days for the given offer and month.
+      parameters:
+      - name: offer_id
+        in: path
+        description: Offer ID
+        required: true
+        schema:
+          type: string
+      - name: year
+        in: query
+        description: Year
+        required: true
+        schema:
+          type: integer
+      - name: month
+        in: query
+        description: Month
+        required: true
+        schema:
+          type: integer
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/pkg.RestDaysResponse'
+        "400":
+          description: INVALID_OFFER_ID | INVALID_INPUT
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/jgin.Error'
+        "500":
+          description: INTERNAL_SERVER_ERROR
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/jgin.Error'
+  /v3/admin/offers/{offer_id}/work-schedules/status:
+    get:
+      tags:
+      - Work Schedules
+      - Admin
+      description: Get the work schedule status for the given offer.
+      parameters:
+      - name: offer_id
+        in: path
+        description: Offer ID
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/domain.WorkScheduleStatus'
+        "400":
+          description: INVALID_OFFER_ID
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/jgin.Error'
+        "500":
+          description: INTERNAL_SERVER_ERROR
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/jgin.Error'
+  /v3/work-schedules:
+    post:
+      tags:
+      - Work Schedules
+      - User
+      description: Set the work schedule status for the current offer.
+      parameters:
+      - name: X-Jump-Offer-ID
+        in: header
+        description: Offer ID
+        required: true
+        schema:
+          type: string
+      requestBody:
+        description: work schedule input
+        content:
+          '*/*':
+            schema:
+              $ref: '#/components/schemas/userhandlers.requestSetWorkSchedule'
+        required: true
+      responses:
+        "204":
+          description: No Content
+          content: {}
+        "400":
+          description: INVALID_INPUT
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/jgin.Error'
+        "403":
+          description: INVALID_OFFER_ID
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/jgin.Error'
+        "500":
+          description: INTERNAL_SERVER_ERROR
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/jgin.Error'
+      x-codegen-request-body-name: body
+  /v3/work-schedules/status:
+    get:
+      tags:
+      - Work Schedules
+      - User
+      description: Get the work schedule status for the current offer.
+      parameters:
+      - name: X-Jump-Offer-ID
+        in: header
+        description: Offer ID
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/domain.WorkScheduleStatus'
+        "403":
+          description: INVALID_OFFER_ID
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/jgin.Error'
+        "500":
+          description: INTERNAL_SERVER_ERROR
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/jgin.Error'
+components:
+  schemas:
+    domain.CreateReportInput:
+      type: object
+      properties:
+        days_away:
+          type: number
+        formation:
+          type: number
+        month:
+          type: integer
+        other_activity_frequency:
+          type: string
+          nullable: true
+        other_activity_hours:
+          type: number
+          nullable: true
+        prospection:
+          type: number
+        vacation_days:
+          type: number
+        work_duration:
+          type: number
+        year:
+          type: integer
+    domain.IfScheduleChanges:
+      type: object
+      properties:
+        extra_rest_day:
+          type: string
+          description: ExtraRestDay is an additionnal rest day if the configuration
+            changes.
+          nullable: true
+        next_available_application_date:
+          type: string
+          description: |-
+            NextAvailableApplicationDate is the date when a schedule change would apply
+            if the user chooses to make a configuration change. This is typically either
+            the first day of the current month or the first day of the next month
+    domain.MissingReportResponse:
+      type: object
+      properties:
+        days:
+          type: integer
+        month:
+          type: integer
+        year:
+          type: integer
+    domain.ReportResponse:
+      type: object
+      properties:
+        created_at:
+          type: string
+        days_away:
+          type: number
+        first_day_as_extra_rest:
+          type: boolean
+          nullable: true
+        formation_duration:
+          type: number
+        id:
+          type: string
+        month:
+          type: integer
+        prospection_duration:
+          type: number
+        unit:
+          $ref: '#/components/schemas/domain.Unit'
+        vacation_days:
+          type: number
+        week_type:
+          type: object
+          nullable: true
+          oneOf:
+          - $ref: '#/components/schemas/pkg.WeekType'
+        work_duration:
+          type: number
+        year:
+          type: integer
+    domain.Unit:
+      type: string
+      enum:
+      - days
+      - hours
+      x-enum-varnames:
+      - UnitDays
+      - UnitHours
+    domain.WeekTypeMonth:
+      type: object
+      properties:
+        month:
+          type: integer
+        week_type:
+          $ref: '#/components/schemas/pkg.WeekType'
+        year:
+          type: integer
+    domain.WorkScheduleStatus:
+      type: object
+      properties:
+        current:
+          type: object
+          description: Current represents the active work schedule configuration for
+            this month
+          oneOf:
+          - $ref: '#/components/schemas/domain.WeekTypeMonth'
+        has_pending_change:
+          type: boolean
+          description: HasPendingChange is true is the schedule is set to be changed
+            on the next month
+        if_schedule_changes:
+          $ref: '#/components/schemas/domain.IfScheduleChanges'
+    jerror.Details:
+      type: object
+      properties:
+        code:
+          type: string
+        field:
+          type: string
+    jgin.Error:
+      type: object
+      properties:
+        details:
+          type: array
+          items:
+            $ref: '#/components/schemas/jerror.Details'
+        error:
+          type: string
+    pkg.RestDaysResponse:
+      type: object
+      properties:
+        first_day_as_extra_rest:
+          type: boolean
+        rest_days:
+          type: array
+          items:
+            type: string
+        week_type:
+          $ref: '#/components/schemas/pkg.WeekType'
+    pkg.WeekType:
+      type: string
+      enum:
+      - mon-fri
+      - tue-sat
+      x-enum-varnames:
+      - WeekTypeMonFri
+      - WeekTypeTueSat
+    userhandlers.requestSetWorkSchedule:
+      required:
+      - week_type
+      type: object
+      properties:
+        week_type:
+          $ref: '#/components/schemas/pkg.WeekType'
+x-original-swagger-version: "2.0"

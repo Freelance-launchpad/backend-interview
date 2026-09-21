@@ -1,0 +1,113 @@
+{{- $company := "" -}}
+{{- if eq .Entity "green" -}}
+  {{- $company = "Jump Green" -}}
+{{- else if eq .Entity "realty" -}}
+  {{- $company = "Jump Realty" -}}
+{{- else if eq .Entity "blue" -}}
+  {{- $company = "Jump Blue" -}}
+{{- else if eq .Entity "formation" -}}
+  {{- $company = "Jump Formation" -}}
+{{- end -}}
+
+{{- $ceo := "Nicolas Fayon" -}}
+
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+
+    <style>
+      {{ .Stylesheet }}
+    </style>
+  </head>
+  <body class="p-10">
+    <span class="[&_svg]:h-16 [&_svg]:w-auto">
+      {{ .Logo }}
+    </span>
+    <div class="my-6 border-b border-black"></div>
+    <p class="font-bold">{{ $company }}</p>
+    <h1 class="text-center text-3xl font-medium my-6">
+      Compte rendu d'activité
+    </h1>
+    <p class="mb-4">
+      <span class="font-bold">M. {{ $ceo }}</span> représentant légal de la
+      société <span class="font-bold">{{ $company }}</span>, atteste que
+      {{ if .Female }}la salariée{{ else }}le salarié{{ end }}
+      <span class="font-bold">
+        {{ if .Female }}Mme.{{ else }}M.{{ end }}
+        {{ .FullName }}
+      </span>
+      a déclaré avoir effectué durant le mois {{ .ReportMonthPreposition }}<span
+        class="font-bold"
+        >{{ .ReportMonth }}</span
+      >
+      :
+    </p>
+    <ul class="list-disc pl-6 mb-4">
+      <li>
+        Un total de
+        {{ .Work }}
+        {{ .WorkUnit }}
+        {{ if eq .WorkUnit "jour" }}
+          effectif
+        {{ else if eq .WorkUnit "jours" }}
+          effectifs
+        {{ else if eq .WorkUnit "heure" }}
+          effective
+        {{ else if eq .WorkUnit "heures" }}
+          effectives
+        {{ end }}
+        dans le mois
+        {{ if ne .Entity "blue" }}
+          <ul class="list-disc pl-6">
+            <li>
+              Soit un nombre de {{ .WeeklyWorkedHours }} heures par semaine
+            </li>
+          </ul>
+        {{ end }}
+      </li>
+      <li>Ainsi que {{ .Formation }} {{ .FormationUnit }} de formation</li>
+      <li>{{ .Prospection }} {{ .ProspectionUnit }} de prospection</li>
+      <li>
+        {{ .Vacation }} {{ .VacationUnit }} de congés et/ou
+        {{ .Away }}
+        {{ .AwayUnit }} d'absence
+      </li>
+    </ul>
+    {{ if .OtherActivity }}
+      <p class="mb-4">
+        {{ if .Female }}La salariée{{ else }}Le salarié{{ end }} a également
+        indiqué effectuer une autre activité à temps partiel pour un total de
+        {{ .OtherActivity }} {{ .OtherActivityUnit }} par
+        {{ .OtherActivityFrequency }}.
+      </p>
+    {{ end }}
+    <p class="mb-4">
+      Au mois {{ .ReportMonthPreposition }} {{ .ReportMonth }},
+      {{ if .Female }}la salariée{{ else }}le salarié{{ end }} a travaillé du
+      {{ .WeekType }}.
+      {{ if .ExtraRestDay }}
+        Le jour {{ .ExtraRestDay }} n'a pas été travaillé.
+      {{ end }}
+    </p>
+    <p class="mb-8">
+      <span class="font-bold">
+        {{ if .Female }}Mme.{{ else }}M.{{ end }}
+        {{ .FullName }}
+      </span>
+      déclare sur l'honneur que les informations figurant dans le présent
+      formulaire sont exactes et conformes à la réalité.
+    </p>
+    <p class="mb-8">Fait à Paris, le {{ .CurrentDate }}</p>
+    <p class="font-bold">M. {{ $ceo }}</p>
+    <p>Président</p>
+    <span class="[&_svg]:h-6 [&_svg]:w-auto">
+      {{ .Signature }}
+    </span>
+    <div class="flex justify-end [&_svg]:h-40 [&_svg]:w-auto">
+      {{ .Stamp }}
+    </div>
+  </body>
+</html>

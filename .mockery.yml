@@ -1,0 +1,626 @@
+dir: "{{.InterfaceDir}}/mocks"
+structname: "{{.InterfaceName}}"
+filename: "{{.InterfaceName | snakecase}}.go"
+pkgname: mocks
+template: testify
+template-data:
+  unroll-variadic: true
+force-file-write: true
+packages:
+  github.com/Freelance-launchpad/backend-interview/common/clients/auth0:
+    interfaces:
+      Client:
+  github.com/Freelance-launchpad/backend-interview/common/clients/gotenberg:
+    interfaces:
+      Client:
+  github.com/Freelance-launchpad/backend-interview/common/clients/api_gouv/geo:
+    interfaces:
+      Client:
+  github.com/Freelance-launchpad/backend-interview/common/clients/swan:
+    interfaces:
+      Client:
+  github.com/Freelance-launchpad/backend-interview/common/clients/swan/graphql:
+    interfaces:
+      GraphQLClient:
+  github.com/Freelance-launchpad/backend-interview/common/jai:
+    interfaces:
+      Client:
+  github.com/Freelance-launchpad/backend-interview/common/jdb:
+    interfaces:
+      Runner:
+      RunnerTx:
+  github.com/Freelance-launchpad/backend-interview/common/jemail:
+    interfaces:
+      Emailer:
+      sesClient:
+        config:
+          dir: "{{.InterfaceDir}}/internal/mocks"
+          structname: "{{ .InterfaceName | firstUpper}}"
+  github.com/Freelance-launchpad/backend-interview/common/jff:
+    interfaces:
+      Client:
+  github.com/Freelance-launchpad/backend-interview/common/jhttp/httpauth/oauth:
+    interfaces:
+      Store:
+        config:
+          dir: "{{.InterfaceDir}}"
+          filename: "store_mocks.go"
+          structname: "{{ .InterfaceName}}Mock"
+          pkgname: "{{.SrcPackageName}}"
+  github.com/Freelance-launchpad/backend-interview/common/jkafka:
+    interfaces:
+      Producer:
+  github.com/Freelance-launchpad/backend-interview/common/jkafka/internal:
+    interfaces:
+      RegistryClient:
+      KafkaWriter:
+  github.com/Freelance-launchpad/backend-interview/common/jkafka/outbox:
+    interfaces:
+      Store:
+      WorkerStore:
+  github.com/Freelance-launchpad/backend-interview/common/jkms:
+    interfaces:
+      Client:
+      awsKMSClient:
+        config:
+          dir: "{{.InterfaceDir}}/internal/mocks"
+          structname: "{{ .InterfaceName | firstUpper}}"
+  github.com/Freelance-launchpad/backend-interview/common/jmb:
+    interfaces:
+      Sender:
+      sqsClient:
+        config:
+          dir: "{{.InterfaceDir}}/internal/mocks"
+          structname: "{{ .InterfaceName | firstUpper}}"
+  github.com/Freelance-launchpad/backend-interview/common/js3/v2:
+    interfaces:
+      FileProvider:
+      s3API:
+        config:
+          dir: "{{.InterfaceDir}}/internal/mocks"
+          structname: "{{ .InterfaceName | firstUpper}}"
+      s3PresignerAPI:
+        config:
+          dir: "{{.InterfaceDir}}/internal/mocks"
+          structname: "{{ .InterfaceName | firstUpper}}"
+      s3UploaderAPI:
+        config:
+          dir: "{{.InterfaceDir}}/internal/mocks"
+          structname: "{{ .InterfaceName | firstUpper}}"
+  github.com/Freelance-launchpad/backend-interview/common/jsimulator:
+    interfaces:
+      SalaryMaxer:
+      Simulator:
+  github.com/Freelance-launchpad/backend-interview/common/jsimulator/coop/v2025/domain:
+    config:
+      dir: "{{.InterfaceDir}}/../mocks"
+    interfaces:
+      Configuration:
+  github.com/Freelance-launchpad/backend-interview/common/jsimulator/coop/v2026/domain:
+    config:
+      dir: "{{.InterfaceDir}}/../mocks"
+    interfaces:
+      Configuration:
+  github.com/Freelance-launchpad/backend-interview/common/jsimulator/portage/v2025/domain:
+    config:
+      dir: "{{.InterfaceDir}}/../mocks"
+    interfaces:
+      Configuration:
+  github.com/Freelance-launchpad/backend-interview/common/jsimulator/portage/v2026/domain:
+    config:
+      dir: "{{.InterfaceDir}}/../mocks"
+    interfaces:
+      Configuration:
+  github.com/Freelance-launchpad/backend-interview/common/jslack:
+    interfaces:
+      WebhookNotifier:
+  github.com/Freelance-launchpad/backend-interview/services/accounting/internal/domain:
+    config:
+      dir: "{{.InterfaceDir}}/../mocks"
+    interfaces:
+      OperationsService:
+      OperationsStore:
+      ReportingService:
+      ReportingStore:
+  github.com/Freelance-launchpad/backend-interview/services/accounting/pkg/client:
+    interfaces:
+      Client:
+  github.com/Freelance-launchpad/backend-interview/services/activity-reports/internal/domain:
+    config:
+      dir: "{{.InterfaceDir}}/../mocks"
+    interfaces:
+      ActivityReportGenerator:
+      ActivityReportService:
+      ActivityReportStore:
+      WorkScheduleService:
+      WorkScheduleStore:
+  github.com/Freelance-launchpad/backend-interview/services/activity-reports/pkg/client:
+    interfaces:
+      Client:
+  github.com/Freelance-launchpad/backend-interview/services/appointments/internal/domain:
+    config:
+      dir: "{{.InterfaceDir}}/../mocks"
+    interfaces:
+      CalendlyClient:
+      CalendlyService:
+  github.com/Freelance-launchpad/backend-interview/services/auth/internal/domain:
+    config:
+      dir: "{{.InterfaceDir}}/../mocks"
+    interfaces:
+      AccessLogStore:
+      AuthService:
+      AuthStore:
+      IdentityService:
+      IdentityStore:
+      MFAStore:
+      MFAService:
+      ServiceIdentityService:
+      ServiceIdentityStore:
+      TokenService:
+      ValidationRequestStore:
+      RoleStore:
+  github.com/Freelance-launchpad/backend-interview/services/auth/pkg/client:
+    interfaces:
+      Client:
+  github.com/Freelance-launchpad/backend-interview/services/b2b/internal/domain:
+    config:
+      dir: "{{.InterfaceDir}}/../mocks"
+    interfaces:
+      FreelancersManager:
+      InvoicesManager:
+      MissionsManager:
+  github.com/Freelance-launchpad/backend-interview/services/banking/internal:
+    interfaces:
+      BalanceService:
+      BalanceStore:
+      BankAccountService:
+      BankAccountStoreV3:
+      BankingClient:
+      CreditTransferManager:
+      CreditTransferRequestStore:
+      CVAEC3SRateStore:
+        config:
+          filename: cvae_c3s_rates_store.go
+      FactoringRateStore:
+      GoCardlessReconciliator:
+      InvoiceReconciliator:
+      LegacyBankingClient:
+      LegacyTransactionStore:
+      ManualOperationService:
+      ManualOperationServiceV2:
+      ManualOperationStore:
+      OperationStore:
+      NotificationClient:
+      OAuthUserTokenStore:
+      PendingOperationStore:
+      TransactionDispatcher:
+      TransactionStore:
+  github.com/Freelance-launchpad/backend-interview/services/banking/internal/domain:
+    config:
+      dir: "{{.InterfaceDir}}/../mocks"
+    interfaces:
+      SwanTransactionStore:
+      TransactionService:
+  github.com/Freelance-launchpad/backend-interview/services/banking/pkg/client:
+    interfaces:
+      Client:
+  github.com/Freelance-launchpad/backend-interview/services/clearbank/internal/domain:
+    config:
+      dir: "{{.InterfaceDir}}/../mocks"
+    interfaces:
+      ClearbankClient:
+      TransactionsService:
+      TransactionsStore:
+      VirtualAccountsService:
+      VirtualAccountsStore:
+  github.com/Freelance-launchpad/backend-interview/services/clock/internal/domain:
+    config:
+      dir: "{{.InterfaceDir}}/../mocks"
+    interfaces:
+      ClocksStore:
+  github.com/Freelance-launchpad/backend-interview/services/common-resources-provider/internal:
+    interfaces:
+      CompaniesHouseClient:
+      ProfessionStore:
+      ProfessionService:
+      UKCompaniesService:
+  github.com/Freelance-launchpad/backend-interview/services/common-resources-provider/pkg/client:
+    interfaces:
+      Client:
+  github.com/Freelance-launchpad/backend-interview/services/crm-synchronizer/internal/domain:
+    config:
+      dir: "{{.InterfaceDir}}/../mocks"
+    interfaces:
+      DeduplicationService:
+      SynchronizationService:
+  github.com/Freelance-launchpad/backend-interview/services/crm-synchronizer/internal/infrastructure:
+    config:
+      dir: "{{.InterfaceDir}}/../mocks"
+    interfaces:
+      IntercomClient:
+  github.com/Freelance-launchpad/backend-interview/services/crm-synchronizer/pkg/client:
+    interfaces:
+      Client:
+  github.com/Freelance-launchpad/backend-interview/services/culture-vouchers/internal/domain:
+    config:
+      dir: "{{.InterfaceDir}}/../mocks"
+    interfaces:
+      OrderService:
+      OrderStore:
+  github.com/Freelance-launchpad/backend-interview/services/crontrol/internal/domain:
+    config:
+      dir: "{{.InterfaceDir}}/../mocks"
+    interfaces:
+      CronjobsService:
+  github.com/Freelance-launchpad/backend-interview/services/dashboard/internal:
+    interfaces:
+      TasksManager:
+      TaskStore:
+  github.com/Freelance-launchpad/backend-interview/services/notifier/internal:
+    interfaces:
+      BlacklistStore:
+      NotificationsStateStore:
+      SlackClient:
+  github.com/Freelance-launchpad/backend-interview/services/notifier/pkg/client:
+    interfaces:
+      Client:
+  github.com/Freelance-launchpad/backend-interview/services/notifier/pkg/email:
+    interfaces:
+      Producer:
+  github.com/Freelance-launchpad/backend-interview/services/notifier/pkg/slack:
+    interfaces:
+      Producer:
+  github.com/Freelance-launchpad/backend-interview/services/expenses/internal/domain:
+    config:
+      dir: "{{.InterfaceDir}}/../mocks"
+    interfaces:
+      AI:
+      AdminExpensesUsecase:
+      AttachmentStore:
+      AttachmentSvc:
+      CategoriesLister:
+      CategoriesStore:
+      ExpenseValidator:
+      ExpensesLockStore:
+      ExpensesStore:
+      ExpensesUsecases:
+      RefusalReasonStore:
+      SalaryExpenseSvc:
+  github.com/Freelance-launchpad/backend-interview/services/expenses/pkg/client:
+    interfaces:
+      Client:
+  github.com/Freelance-launchpad/backend-interview/services/fees/internal:
+    interfaces:
+      PricingPlanStore:
+      UserCustomPricingStore:
+      UserCustomPricingStoreTx:
+      UserDefaultPlanStore:
+      UserPricingManager:
+  github.com/Freelance-launchpad/backend-interview/services/fees/internal/domain:
+    config:
+      dir: "{{.InterfaceDir}}/../mocks"
+    interfaces:
+      AuthorFinder:
+      DiscountGroupsStore:
+      DiscountPlansStore:
+      DiscountsManager:
+      DiscountsStore:
+      FeesGenerator:
+      FeesGroupsStore:
+      FeesResolver:
+      FeesManager:
+      FeesSalariesStore:
+      FeesPlansStore:
+      FeesStore:
+      Initializer:
+      PaymentsStore:
+      PricingManager:
+      PricingResolver:
+  github.com/Freelance-launchpad/backend-interview/services/fees/pkg/client:
+    interfaces:
+      Client:
+  github.com/Freelance-launchpad/backend-interview/services/healthcare/internal/domain:
+    config:
+      dir: "{{.InterfaceDir}}/../mocks"
+    interfaces:
+      HealthInsuranceService:
+      KenkoClient:
+      KenkoUsersStore:
+  github.com/Freelance-launchpad/backend-interview/services/healthcare/pkg/client:
+    interfaces:
+      Client:
+  github.com/Freelance-launchpad/backend-interview/services/hubspot/internal/domain:
+    config:
+      dir: "{{.InterfaceDir}}/../mocks"
+    interfaces:
+      HubspotClient:
+      HubspotService:
+  github.com/Freelance-launchpad/backend-interview/services/hubspot/pkg:
+    interfaces:
+      Producer:
+  github.com/Freelance-launchpad/backend-interview/services/hubspot/pkg/client:
+    interfaces:
+      Client:
+  github.com/Freelance-launchpad/backend-interview/services/invoices/internal:
+    interfaces:
+      CreditNoteManager:
+      CreditNoteStore:
+      EmailNotifier:
+      FactoringStore:
+      InvoiceManager:
+      InvoiceStore:
+      PaymentManager:
+      PaymentStore:
+      PDFGenerator:
+      PennylaneManager:
+      PennylaneCustomerStore:
+      PennylaneInvoiceStore:
+      ReferenceStore:
+  github.com/Freelance-launchpad/backend-interview/services/invoices/internal/domain:
+    config:
+      dir: "{{.InterfaceDir}}/../mocks"
+    interfaces:
+      QuoteStore:
+      QuoteManager:
+  github.com/Freelance-launchpad/backend-interview/services/invoices/pkg/pennylane:
+    interfaces:
+      Client:
+  github.com/Freelance-launchpad/backend-interview/services/invoices/pkg/client:
+    interfaces:
+      Client:
+  github.com/Freelance-launchpad/backend-interview/services/leaves/internal:
+    interfaces:
+      LeaveManager:
+      LeaveStore:
+  github.com/Freelance-launchpad/backend-interview/services/leaves/pkg/client:
+    interfaces:
+      Client:
+  github.com/Freelance-launchpad/backend-interview/services/marketing/internal/domain:
+    config:
+      dir: "{{.InterfaceDir}}/../mocks"
+    interfaces:
+      ActivityService:
+      ActivityStore:
+      AcademyStore:
+      AdzunaClient:
+      FranceTravailClient:
+      JoobleClient:
+      JobPostsService:
+      JobPostsStore:
+      JobSearchesService:
+      JobSearchesStore:
+      MarketingService:
+      MarketingStore:
+      StaffingProfileService:
+      StaffingProfileStore:
+  github.com/Freelance-launchpad/backend-interview/services/marketing/pkg/client:
+    interfaces:
+      Client:
+  github.com/Freelance-launchpad/backend-interview/services/meal-vouchers/internal/domain:
+    config:
+      dir: "{{.InterfaceDir}}/../mocks"
+    interfaces:
+      MealVouchersMonitoringService:
+      MealVouchersOrdersStore:
+      MealVouchersService:
+      MealVouchersStore:
+      MealVouchersStoreTx:
+      Notifier:
+      VoucherProviderClient:
+  github.com/Freelance-launchpad/backend-interview/services/meal-vouchers/pkg/client:
+    interfaces:
+      Client:
+  github.com/Freelance-launchpad/backend-interview/services/missions/internal:
+    interfaces:
+      AddendumManager:
+      AddendumStore:
+      B2BManager:
+        config:
+          filename: b2b_manager.go # by default mockery generates this file as b2_b_manager
+      CallbackInternalManager:
+      CallbackManager:
+      ClientManager:
+      ClientStore:
+      ContractManager:
+      ContractStore:
+      IdentityManager:
+      MissionContractManager:
+      MissionManager:
+      MissionStore:
+      ReminderManager:
+      SirenBlacklistStore:
+  github.com/Freelance-launchpad/backend-interview/services/assignments/pkg/client:
+    interfaces:
+      Client:
+  github.com/Freelance-launchpad/backend-interview/services/contracts/pkg/client:
+    interfaces:
+      Client:
+  github.com/Freelance-launchpad/backend-interview/services/missions/pkg/client:
+    interfaces:
+      Client:
+  github.com/Freelance-launchpad/backend-interview/services/onboarding/internal:
+    interfaces:
+      ContractService:
+      ContractSignatureStore:
+      OnboardingFormService:
+      OnboardingFormStore:
+      OnboardingService:
+      OnboardingStore:
+      PandadocCallbackHandler:
+      PreEmploymentService:
+      ReminderService:
+      SilaeDataStore:
+      StaffologyDataStore:
+      StateMachineService:
+      StateMachineStore:
+      StepRunner:
+  github.com/Freelance-launchpad/backend-interview/services/onboarding/internal/usecases/state-machine/step-runners/contract-creation:
+    interfaces:
+      contractManager:
+        config:
+          dir: "{{.InterfaceDir}}"
+          filename: "{{.InterfaceName | snakecase}}_mocks.go"
+          structname: mock{{.InterfaceName}}
+          pkgname: "{{.SrcPackageName}}"
+  github.com/Freelance-launchpad/backend-interview/services/onboarding/pkg/client:
+    interfaces:
+      Client:
+  github.com/Freelance-launchpad/backend-interview/services/pandasync/internal/domain:
+    config:
+      dir: "{{.InterfaceDir}}/../mocks"
+    interfaces:
+      CallbackClient:
+      DocumentService:
+      DocumentStore:
+      PandadocClient:
+      SignatureStore:
+  github.com/Freelance-launchpad/backend-interview/services/pandasync/pkg/client:
+    interfaces:
+      Client:
+  github.com/Freelance-launchpad/backend-interview/services/payroll/internal/domain:
+    config:
+      dir: "{{.InterfaceDir}}/../mocks"
+    interfaces:
+      AgendaStore:
+      DocumentsService:
+      ExpensesStore:
+      FinanceService:
+      IncomeTaxStore:
+      JumpRulesStore:
+      MealVouchersOrdersStore:
+      NotificationsStore:
+      Notifier:
+      OperationStore:
+      OperationsManager:
+      PayrollCalculator:
+      PayrollManager:
+      PayrollPayment:
+      QAService:
+      RulesService:
+      SalarySimulationService:
+      SalaryStore:
+      SalaryValidationManager:
+      SdtcService:
+      SdtcStore:
+      SeveranceStore:
+      SilaeClient:
+      SilaeIDsStore:
+        config:
+          filename: silae_ids_store.go # by default mockery generates this file as silae_i_ds_store
+      SilaeService:
+      SimConfig:
+  github.com/Freelance-launchpad/backend-interview/services/payroll/pkg/client:
+    interfaces:
+      Client:
+  github.com/Freelance-launchpad/backend-interview/services/sponsorship/internal/domain:
+    config:
+      dir: "{{.InterfaceDir}}/../mocks"
+    interfaces:
+      SponsorshipsService:
+      SponsorshipsStore:
+  github.com/Freelance-launchpad/backend-interview/services/sponsorship/pkg/client:
+    interfaces:
+      Client:
+  github.com/Freelance-launchpad/backend-interview/services/stripe-sync/internal/domain:
+    config:
+      dir: "{{.InterfaceDir}}/../mocks"
+    interfaces:
+      BalanceTransactionStore:
+      CheckoutService:
+      CheckoutSessionStore:
+      CustomerService:
+      CustomerStore:
+      SubscriptionService:
+      SubscriptionStore:
+      StripeClient:
+  github.com/Freelance-launchpad/backend-interview/services/stripe-sync/internal/infrastructure/stripe:
+    config:
+      dir: "{{.InterfaceDir}}/mocks"
+      structname: Mock{{ .InterfaceName | firstUpper}}
+    interfaces:
+      checkoutSessionClient:
+      subscriptionClient:
+      balanceTransactionClient:
+  github.com/Freelance-launchpad/backend-interview/services/stripe-sync/pkg/client:
+    interfaces:
+      Client:
+  github.com/Freelance-launchpad/backend-interview/services/swan-sync/internal/domain:
+    config:
+      dir: "{{.InterfaceDir}}/../mocks"
+    interfaces:
+      AccountHolderVerificationRequirementStore:
+      AccountService:
+      AccountStore:
+      BalancesService:
+      BalancesStore:
+      CardService:
+      CardStore:
+      ConsentService:
+      ConsentStore:
+      Notifier:
+      OnboardingService:
+      OnboardingStore:
+      ReminderStore:
+      SwanClient:
+      SwanImpersonateClient:
+      SwanUsersStore:
+      TransactionStore:
+  github.com/Freelance-launchpad/backend-interview/services/swan-sync/internal/infrastructure/swan/graphql:
+    interfaces:
+      GraphQLClient:
+  github.com/Freelance-launchpad/backend-interview/services/swan-sync/pkg/client:
+    interfaces:
+      Client:
+  github.com/Freelance-launchpad/backend-interview/services/users/internal/domain:
+    config:
+      dir: "{{.InterfaceDir}}/../mocks"
+    interfaces:
+      AddressStore:
+      ChurnManager:
+      ChurnStore:
+      ContractManager:
+      ContractStore:
+      FileInfoStore:
+      FileInfoStoreTx:
+      FileManager:
+      LegalFileManager:
+      ModuleManager:
+      NoteManager:
+      NoteStore:
+      OfferManager:
+      OfferStore:
+      ReboardingManager:
+      UserManager:
+      UserStore:
+  github.com/Freelance-launchpad/backend-interview/services/users/pkg/client:
+    interfaces:
+      Client:
+  github.com/Freelance-launchpad/backend-interview/services/assignments/internal/domain:
+    config:
+      dir: "{{.InterfaceDir}}/../mocks"
+    interfaces:
+      AgreementService:
+      AgreementStore:
+      AssignmentService:
+      AssignmentStore:
+      ClientService:
+      ClientStore:
+  github.com/Freelance-launchpad/backend-interview/services/contracts/internal/domain:
+    config:
+      dir: "{{.InterfaceDir}}/../mocks"
+    interfaces:
+      ContractService:
+      ContractStore:
+  github.com/Freelance-launchpad/backend-interview/services/vehicles/internal/domain:
+    config:
+      dir: "{{.InterfaceDir}}/../mocks"
+    interfaces:
+      AttachmentStore:
+      IKStore:
+      IKSvc:
+      LocationCompute:
+      VehicleStore:
+      VehicleSvc:
+  github.com/Freelance-launchpad/backend-interview/services/vehicles/pkg/client:
+    interfaces:
+      Client:

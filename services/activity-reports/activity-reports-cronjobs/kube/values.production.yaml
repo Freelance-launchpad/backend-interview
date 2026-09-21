@@ -1,0 +1,10 @@
+resources:
+  limits:
+    memory: 32Mi
+  requests:
+    memory: 32Mi
+
+cronjobs:
+  - name: generate-reports-pdfs
+    schedule: "*/15 * * * *"
+    args: ["generate-reports-pdfs"]

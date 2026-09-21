@@ -1,0 +1,14 @@
+gateway:
+  enabled: true
+
+migrationHook: true
+
+annotations:
+  join-jump.com/audiences: "app"
+  join-jump.com/offers: "life"
+  join-jump.com/criticity: "p3"
+
+secrets:
+  database_password: DATABASE_PASSWORD
+  jwt_public_key: JWT_PUBLIC_KEY
+  auth_client_secret: AUTH_CLIENT_SECRET
