@@ -1,0 +1,135 @@
+version: '3'
+
+env:
+  GOPATH:
+    sh: go env GOPATH
+  _MOCKERY_VERSION: 3.7.4
+  GCL_INSTALL_VERSION: 2.13.1
+
+tasks:
+  mocks:
+    desc: Generate mocks using mockery. It uses the configuration from .mockery.yml.
+    aliases:
+      - mockery
+    deps:
+      - mockery:install
+    cmds:
+      - $GOPATH/bin/mockery-$_MOCKERY_VERSION
+
+  openapi:
+    desc: Generate OpenAPI specs using a custom build of swag.
+    aliases:
+      - swag
+      - swagger
+    deps:
+      - swag:install
+    preconditions:
+      - test -f main.go
+    dir: '{{.USER_WORKING_DIR}}'
+    cmds:
+      - |
+        $GOPATH/bin/swag init \
+          --quiet \
+          --parseDependency \
+          --parseDependencyLevel 3 \
+          --nullablePointers \
+          --output=specs \
+          --outputTypes=yaml
+      - |
+        curl -fsSL 'https://converter.swagger.io/api/convert' \
+          -H 'Accept: application/yaml' \
+          -H 'Content-Type: application/yaml' \
+          --data-binary @specs/swagger.yaml \
+          -o specs/v3.yml
+      - rm specs/swagger.yaml
+      - perl -pi -e 's/allOf:/oneOf:/g' specs/v3.yml
+
+  lint:
+    desc: Lint the code using a custom build of golangci-lint.
+    aliases:
+      - gcl
+      - custom-gcl
+    deps:
+      - custom-gcl:install
+    cmds:
+      - $GOPATH/bin/custom-gcl-$GCL_INSTALL_VERSION run -c .golangci.custom.yaml '{{.USER_WORKING_DIR}}/...'
+
+  test:
+    desc: Run the unit tests using gotestsum.
+    cmds:
+      - gotestsum '{{.USER_WORKING_DIR}}/...'
+
+  integration:
+    desc: Run the integration tests (fees v2)
+    dir: ./services/fees/test
+    cmds:
+      - docker compose up -d --build --force-recreate
+      - go test -tags=integration
+      - docker compose down
+
+  kafka-integration:
+    desc: Run the kafka integration tests
+    aliases:
+      - kafka
+    dir: ./common/jkafka/tests
+    cmds:
+      - docker compose up -d --force-recreate --wait
+      - go test -tags=integration
+      - docker compose down
+
+  mockery:install:
+    status:
+      - test -f $GOPATH/bin/mockery-$_MOCKERY_VERSION
+    dir: /tmp
+    generates:
+      - $GOPATH/bin/mockery-$_MOCKERY_VERSION
+    cmds:
+      - go install github.com/vektra/mockery/v3@v$_MOCKERY_VERSION
+      - cp $GOPATH/bin/mockery $GOPATH/bin/mockery-$_MOCKERY_VERSION
+
+  swag:install:
+    status:
+      - test -f $GOPATH/bin/swag
+    dir: /tmp
+    cmds:
+      # Use forked version of swag to support nullable pointers
+      # Forked modules cannot be installed with `go install <url>`
+      - git clone --single-branch --branch master --depth 1 git@github.com:Thiht/swag.git
+      - cd swag && go install github.com/Thiht/swag/cmd/swag
+      - rm -rf swag/
+
+  custom-gcl:install:
+    status:
+      - test -f $GOPATH/bin/custom-gcl-$GCL_INSTALL_VERSION
+    generates:
+      - $GOPATH/bin/custom-gcl-$GCL_INSTALL_VERSION
+    cmds:
+      - GOBIN=/tmp go install github.com/golangci/golangci-lint/v2/cmd/golangci-lint@v$GCL_INSTALL_VERSION
+      - /tmp/golangci-lint custom
+      - mv custom-gcl $GOPATH/bin/custom-gcl-$GCL_INSTALL_VERSION
+      - rm /tmp/golangci-lint
+
+  gotestsum:install:
+    status:
+      - test -f $GOPATH/bin/gotestsum
+    dir: /tmp
+    cmds:
+      - go install gotest.tools/gotestsum@latest
+
+  custom-gcl:build:ci:
+    cmds:
+      - GOBIN=/tmp go install github.com/golangci/golangci-lint/v2/cmd/golangci-lint@v$GCL_INSTALL_VERSION
+      - GOOS=linux GOARCH=amd64 CGO_ENABLED=0 /tmp/golangci-lint custom
+      - mv custom-gcl tools/bin/custom-gcl-amd
+      - GOOS=linux GOARCH=arm64 CGO_ENABLED=0 /tmp/golangci-lint custom
+      - mv custom-gcl tools/bin/custom-gcl-arm
+      - rm /tmp/golangci-lint
+
+  jbuild:build:ci:
+    cmds:
+      - GOOS=linux GOARCH=amd64 CGO_ENABLED=0 go build -o ./tools/bin/jbuild-amd ./tools/jbuild
+
+  hooks:install:
+    cmds:
+      - chmod -R +x ./tools/githooks
+      - cp ./tools/githooks/pre-commit.init ./.git/hooks/pre-commit

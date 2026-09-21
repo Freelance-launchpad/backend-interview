@@ -1,0 +1,16 @@
+configuration:
+  authorization:
+    jwk_url: "https://dev--jump.eu.auth0.com/.well-known/jwks.json"
+    iss: "https://dev--jump.eu.auth0.com/"
+    custom_field_prefix: "https://dev.jumptest.link"
+
+  database:
+    host: "shared-database.app.svc.cluster.local"
+    port: 5432
+    user: "activity-reports"
+    name: "activity-reports"
+
+  auth_url: "http://auth/"
+  users_url: "http://users/"
+  expenses_url: "http://expenses-api/"
+  payroll_url: "http://payroll/"

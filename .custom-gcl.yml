@@ -1,0 +1,6 @@
+version: v2.13.1
+plugins:
+  - module: "github.com/Freelance-launchpad/backend-interview/tools/linters/jerrorwrapdefer"
+    path: tools/linters/jerrorwrapdefer
+  - module: "github.com/Freelance-launchpad/backend-interview/tools/linters/transactorctx"
+    path: tools/linters/transactorctx

@@ -1,0 +1,26 @@
+version: "2"
+
+run:
+  tests: true
+
+linters:
+  default: none
+  enable:
+    - govet
+    - revive
+    - unused
+    - errcheck
+    - staticcheck
+    - ineffassign
+    - unconvert
+    - misspell
+    - lll
+    - nakedret
+    - gocritic
+  settings:
+    lll:
+      line-length: 120
+
+formatters:
+  enable:
+    - goimports

@@ -1,0 +1,22 @@
+FROM --platform=$BUILDPLATFORM public.ecr.aws/docker/library/golang:1.27 AS builder
+
+ARG BUILD_DATE
+ARG TARGETOS
+ARG TARGETARCH
+
+WORKDIR /go/src/github.com/Freelance-launchpad/backend-interview/services/payroll/payroll-daemon
+COPY ./ /go/src/github.com/Freelance-launchpad/backend-interview
+
+RUN CGO_ENABLED=0 GOOS=${TARGETOS} GOARCH=${TARGETARCH} go build -ldflags "-X 'main.buildDate=${BUILD_DATE}'" -mod=vendor -o payroll-daemon
+
+FROM scratch
+
+COPY --from=builder /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/
+
+WORKDIR /app/
+COPY --from=builder /go/src/github.com/Freelance-launchpad/backend-interview/services/payroll/payroll-daemon/payroll-daemon /app/payroll-daemon
+
+EXPOSE 8080
+USER 1000
+
+CMD ["./payroll-daemon", "--config=/etc/payroll-daemon/configuration.yaml"]
